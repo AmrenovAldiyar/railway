@@ -19,52 +19,37 @@ class TrainsController
     controller.new.send(method)
   end
 
-  def all
+  def index
     puts 'All trains'
-    Train.trains.each { |train| puts "#{train.class.to_s} - #{train.number}" }
+    Train.trains.each { |train| puts train.name }
   end
 
   def hook_wagon
-    puts "Choose the train"
-    Train.trains.each_with_index do |train, index|
-      puts "#{index + 1}: #{train.name}"
-    end
-    input = gets.chomp.to_i
-    train = Train.trains[ input- 1]
-
-    train.class.to_s == 'PassengerTrain' ? train.hook_wagon(PassengerWagon.new) : train.hook_wagon(CargoWagon.new)
-    puts "Wagon hooked up successfuly"
+    train = choose_train 
+    wagon = train.class == PassengerTrain ? PassengerWagon.new : CargoWagon.new
+    train.hook_wagon(wagon)
   end
 
   def unhook_wagon
-    puts "Choose the train"
-    Train.trains.each_with_index do |train, index|
-      puts "#{index + 1}: #{train.name}"
-    end
-    input = gets.chomp.to_i
-    train = Train.trains[ input- 1]
-
-    if train.wagons.any?
-      train.unhook_wagon
-      puts "Wagon unhooked successfuly"
-    else
-      puts "Train has no wagons"
-    end
+    train = choose_train
+    train.unhook_wagon if train.wagons.any?
   end
 
-  def move_train
+  def move
+    train = choose_train
+
+    manage_train_movement(train) if train.route
+  end
+
+  private
+
+  def choose_train
     puts "Choose the train"
     Train.trains.each_with_index do |train, index|
       puts "#{index + 1}: #{train.name}"
     end
     input = gets.chomp.to_i
-    train = Train.trains[ input- 1]
-
-    if train.route
-      manage_train_movement(train)
-    else
-      puts "Train has no route to move"
-    end
+    Train.trains[input - 1]
   end
 
   def manage_train_movement(train)

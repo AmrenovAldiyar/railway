@@ -15,7 +15,7 @@ class Route
   end
 
   def add_intermediate_station(intermediate_station)
-    @intermediate_stations << intermediate_station
+    @intermediate_stations << intermediate_station if intermediate_station != starting_station && intermediate_station != end_station
   end
 
   def remove_intermediate_station(intermediate_station)

@@ -1,7 +1,7 @@
 require 'spec_helper'
-require_relative '../src/train'
-require_relative '../src/route'
-require_relative '../src/station'
+require_relative '../src/classes/train'
+require_relative '../src/classes/route'
+require_relative '../src/classes/station'
 
 describe Train do
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
-require_relative '../src/station'
-require_relative '../src/train'
+require_relative '../src/classes/station'
+require_relative '../src/classes/train'
 
 describe Station do
   subject { described_class.new('Heaven') }

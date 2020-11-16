@@ -1,7 +1,7 @@
 require 'spec_helper'
-require_relative '../src/cargo_train'
-require_relative '../src/cargo_wagon'
-require_relative '../src/passenger_wagon'
+require_relative '../src/classes/cargo_train'
+require_relative '../src/classes/cargo_wagon'
+require_relative '../src/classes/passenger_wagon'
 
 describe CargoTrain do
   subject { CargoTrain.new('1') }
