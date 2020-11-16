@@ -13,42 +13,42 @@ describe Train do
   
   let!(:route) { Route.new(starting_station, end_station) }
 
-  subject { described_class.new('1', type: 'passenger', wagons_quantity: 10) }
+  subject { described_class.new('1') }
  
-  describe "#current_station" do
+  describe '#current_station' do
 
-    context "When it does not have route" do
-      it "returns nil" do
+    context 'When it does not have route' do
+      it 'returns nil' do
         expect(subject.current_station).to eq(nil)
       end
     end
 
-    context "When it has route" do
-      it "returns current station" do
+    context 'When it has route' do
+      it 'returns current station' do
         subject.take_route(route)
         expect(subject.current_station).to eq(route.starting_station)
       end
     end
   end
 
-  describe "#next_station" do
-    it "returns trains next station" do
+  describe '#next_station' do
+    it 'returns trains next station' do
       route.add_intermediate_station(intermediate_station_1)
       subject.take_route(route)
       expect(subject.next_station).to eq(intermediate_station_1)
     end
   end
 
-  describe "#previous_station" do
-    it "returns trains previous station" do
+  describe '#previous_station' do
+    it 'returns trains previous station' do
       route.add_intermediate_station(intermediate_station_1)
       subject.take_route(route)
       expect(subject.previous_station).to eq(nil)
     end
   end
 
-  describe "#move_forward" do
-    it "it moves to the next station and returns it as current" do
+  describe '#move_forward' do
+    it 'it moves to the next station and returns it as current' do
       route.add_intermediate_station(intermediate_station_1)
       subject.take_route(route)
       expect(subject.move_forward).to eq(intermediate_station_1)
@@ -56,8 +56,8 @@ describe Train do
     end
   end
 
-  describe "#move_backward" do
-    it "it moves to the previous station and returns it as current" do
+  describe '#move_backward' do
+    it 'it moves to the previous station and returns it as current' do
       route.add_intermediate_station(intermediate_station_1)
       subject.take_route(route)
       subject.move_forward

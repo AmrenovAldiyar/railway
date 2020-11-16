@@ -1,14 +1,20 @@
 class Train
   PICK_UP_SPEED = 15
 
-  attr_reader  :number, :type, :wagons_quantity, :route
+  attr_reader :number, :speed, :wagons, :route
 
-  def initialize(number, options = {})
+  @@trains = []
+
+  def self.trains
+    @@trains
+  end
+
+  def initialize(number)
     @number = number
-    @type = options[:type]
-    @wagons_quantity = options[:wagons_quantity]
+    @wagons = []
     @speed = 0
     @route = nil
+    @@trains << self
   end
 
   def pick_up_speed
@@ -19,12 +25,12 @@ class Train
     @speed = 0
   end
 
-  def hook_wagon
-    @wagons_quantity += 1 if speed.zero?
+  def hook_wagon(wagon)
+    @wagons << wagon if speed.zero?
   end
 
   def unhook_wagon
-    @wagons_quantity -= 1 if speed.zero?
+    @wagons.delete(@wagons.last) if speed.zero?
   end
 
   def take_route(route)
@@ -41,7 +47,7 @@ class Train
 
       next_station.take_train(self)
     else
-      puts "You are at the end station"
+      puts 'You are at the end station'
     end
     return current_station
   end
@@ -54,13 +60,13 @@ class Train
 
       previous_station.take_train(self)
     else
-      puts "You are at the starting station"
+      puts 'You are at the starting station'
     end
     return current_station
   end
 
   def current_station
-    @route.stations.find { |station| station.trains.include?(self) } if route
+    @route.stations.find { |station| station.trains.include?(self) } if @route
   end
 
   def next_station
@@ -77,7 +83,11 @@ class Train
     end
   end
 
-  private
+  def name
+    "#{self.class} - #{number}"
+  end
+
+  protected
 
   def leave_current_station
     current_station.send_train(self)
