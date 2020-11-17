@@ -51,28 +51,28 @@ class RoutesController
 
   def choose_route
     puts "Choose the route"
-    Route.routes.each_with_index do |route, index|
+    Route.all.each_with_index do |route, index|
       puts "#{index + 1}: #{route.name}"
     end
     input = gets.chomp.to_i
-    Route.routes[input - 1]
+    Route.all[input - 1]
   end
 
   def choose_train
     puts "Choose the train"
-    Train.trains.each_with_index do |train, index|
+    Train.all.each_with_index do |train, index|
       puts "#{index + 1}: #{train.name}"
     end
     input = gets.chomp.to_i
-    Train.trains[input - 1]
+    Train.all[input - 1]
   end
 
   def choose_station
-    Station.stations.each_with_index do |station, index|
+    Station.all.each_with_index do |station, index|
       puts "#{index + 1}: #{station.name}"
     end
     input = gets.chomp.to_i
-    Station.stations[input - 1]
+    Station.all[input - 1]
   end
 
   def choose_intermediate_station(route)

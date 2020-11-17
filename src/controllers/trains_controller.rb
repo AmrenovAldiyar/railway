@@ -21,7 +21,7 @@ class TrainsController
 
   def index
     puts 'All trains'
-    Train.trains.each { |train| puts train.name }
+    Train.all.each { |train| puts train.name }
   end
 
   def hook_wagon
@@ -45,11 +45,11 @@ class TrainsController
 
   def choose_train
     puts "Choose the train"
-    Train.trains.each_with_index do |train, index|
+    Train.all.each_with_index do |train, index|
       puts "#{index + 1}: #{train.name}"
     end
     input = gets.chomp.to_i
-    Train.trains[input - 1]
+    Train.all[input - 1]
   end
 
   def manage_train_movement(train)

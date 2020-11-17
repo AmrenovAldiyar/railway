@@ -1,7 +1,7 @@
 class StationsController
   def index
     puts 'List of stations'
-    Station.stations.each { |station| puts station.name }
+    Station.all.each { |station| puts station.name }
   end
 
   def create

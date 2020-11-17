@@ -1,12 +1,24 @@
+require_relative '../modules/manufacturerable'
+require_relative '../modules/instance_counter'
+
 class Train
+  include Manufacturerable
+  include InstanceCounter
+
   PICK_UP_SPEED = 15
 
   attr_reader :number, :speed, :wagons, :route
 
-  @@trains = []
+  def self.all
+    @@trains ||= []
+  end
 
-  def self.trains
-    @@trains
+  def self.clear_all!
+    @@trains = []
+  end
+
+  def self.find(number)
+    @@trains.find { |train| train.number == number }
   end
 
   def initialize(number)
@@ -14,7 +26,8 @@ class Train
     @wagons = []
     @speed = 0
     @route = nil
-    @@trains << self
+    self.class.all << self
+    register_instance
   end
 
   def pick_up_speed
